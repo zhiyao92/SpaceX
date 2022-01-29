@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 
 protocol RocketAPIProtocol {
-    func fetchRockets(from year: Int) -> Observable<Rockets>
+    func fetchRockets() -> Observable<Rockets>
     func fetchRocketDetail(id: String) -> Observable<RocketDetail>
 }
 
@@ -14,7 +14,7 @@ class RocketAPI: RocketAPIProtocol {
         self.apiClient = apiClient
     }
     
-    func fetchRockets(from year: Int) -> Observable<Rockets> {
+    func fetchRockets() -> Observable<Rockets> {
         return Observable.create { [weak self] observer -> Disposable in
             self?.performAPIRequest("launches") { result in
                 switch result {
@@ -26,8 +26,7 @@ class RocketAPI: RocketAPIProtocol {
                         return
                     }
                     
-                    let filteredRockets = response.body.filter( { Int($0.dateUTC.toISODate()?.toString(withFormat: "yyyy") ?? "") ?? 0 >= year })
-                    observer.onNext(filteredRockets)
+                    observer.onNext(response.body)
                 case .failure(let error):
                     observer.onError(error)
                 }

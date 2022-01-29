@@ -48,7 +48,7 @@ struct Rocket: Codable {
 
 // For the purpose mocking data for Unit Test
 extension Rocket {
-    static func initRocketWith(title: String) -> Rocket {
+    static func initRocketWith(title: String, upcoming: Bool = false, dateUTC: String = "") -> Rocket {
         return Rocket(fairings: nil,
                       links: Links(patch: Patch(small: nil, large: nil),
                                    reddit: Reddit(campaign: nil, launch: nil, media: nil, recovery: nil),
@@ -72,11 +72,11 @@ extension Rocket {
                       launchpad: "",
                       flightNumber: 0,
                       name: title,
-                      dateUTC: "",
+                      dateUTC: dateUTC,
                       dateUnix: 1,
                       dateLocal: "",
                       datePrecision: DatePrecision.day,
-                      upcoming: false,
+                      upcoming: upcoming,
                       cores: [],
                       autoUpdate: false,
                       tbd: false,

@@ -43,7 +43,7 @@ class RocketAPIMock: RocketAPI {
         }
     }
     
-    override func fetchRockets(from year: Int) -> Observable<Rockets> {
+    override func fetchRockets() -> Observable<Rockets> {
         if let apiError = rocketsError {
             fetchRocketAPIErrorCalled += 1
             return Observable.error(apiError)

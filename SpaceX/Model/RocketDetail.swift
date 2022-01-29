@@ -2,7 +2,7 @@
 import Foundation
 
 // MARK: - RocketDetail
-struct RocketDetail: Codable {
+struct RocketDetail: Codable, Equatable {
     let height, diameter: Diameter
     let mass: Mass
     let firstStage: FirstStage
@@ -33,6 +33,60 @@ struct RocketDetail: Codable {
         case country, company, wikipedia
         case rocketDetailDescription = "description"
         case id
+    }
+}
+
+extension RocketDetail {
+    static func == (lhs: RocketDetail, rhs: RocketDetail) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+extension RocketDetail {
+    static func initWith(id: String) -> RocketDetail {
+        return RocketDetail(height: Diameter(meters: 0, feet: 0),
+                            diameter: Diameter(meters: 0, feet: 0),
+                            mass: Mass(kg: 2, lb: 2),
+                            firstStage: FirstStage(thrustSeaLevel: Thrust(kN: 0, lbf: 0),
+                                                   thrustVacuum: Thrust(kN: 0, lbf: 0),
+                                                   reusable: false,
+                                                   engines: 0,
+                                                   fuelAmountTons: 0, burnTimeSEC: 0),
+                            secondStage: SecondStage(thrust: Thrust(kN: 0, lbf: 0),
+                                                     payloads: Payloads(compositeFairing: CompositeFairing(height: Diameter(meters: 0, feet: 0),
+                                                                                                           diameter: Diameter(meters: 0, feet: 0)),
+                                                                        option1: ""),
+                                                     reusable: false,
+                                                     engines: 0,
+                                                     fuelAmountTons: 0,
+                                                     burnTimeSEC: 0),
+                            engines: Engines(isp: ISP(seaLevel: 0, vacuum: 0),
+                                             thrustSeaLevel: Thrust(kN: 0, lbf: 0),
+                                             thrustVacuum: Thrust(kN: 0, lbf: 0),
+                                             number: 0,
+                                             type: "",
+                                             version: "",
+                                             layout: "",
+                                             engineLossMax: 0,
+                                             propellant1: "",
+                                             propellant2: "",
+                                             thrustToWeight: 0),
+                            landingLegs: LandingLegs(number: 0, material: ""),
+                            payloadWeights: [],
+                            flickrImages: [],
+                            name: "",
+                            type: "",
+                            active: false,
+                            stages: 0,
+                            boosters: 0,
+                            costPerLaunch: 0,
+                            successRatePct: 0,
+                            firstFlight: "",
+                            country: "",
+                            company: "",
+                            wikipedia: "",
+                            rocketDetailDescription: "",
+                            id: id)
     }
 }
 

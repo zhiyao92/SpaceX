@@ -39,9 +39,11 @@ class HomeViewModel {
     }
     
     func getRockets() {
-        rocketAPI.fetchRockets(from: selectedYears.rawValue)
+        rocketAPI.fetchRockets()
             .subscribe { [weak self] rockets in
-                self?.configureSection(rockets: rockets)
+                let filteredRockets = rockets.filter( { Int($0.dateUTC.toISODate()?.toString(withFormat: "yyyy") ?? "") ?? 0 >= self?.selectedYears.rawValue ?? 0 })
+                
+                self?.configureSection(rockets: filteredRockets)
             } onError: { [weak self] error in
                 self?._error.onNext(error)
             }.disposed(by: disposeBag)

@@ -35,6 +35,7 @@
 		7FD5C95F27A5213F00BA4AAE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD5C95E27A5213F00BA4AAE /* BaseViewController.swift */; };
 		7FD5C96127A523F100BA4AAE /* HomeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD5C96027A523F100BA4AAE /* HomeViewModelTest.swift */; };
 		7FD5C96327A5240400BA4AAE /* RocketAPIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD5C96227A5240400BA4AAE /* RocketAPIMock.swift */; };
+		7FD5C96527A532E400BA4AAE /* DetailViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD5C96427A532E400BA4AAE /* DetailViewModelTest.swift */; };
 		D878B33DDEBB9D6507EB6AC0 /* Pods_SpaceX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3923715B5CC0553A94BC4811 /* Pods_SpaceX.framework */; };
 		F4BA87C0628C7FB8505BD455 /* Pods_SpaceXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE897C367A9ED3C47F586924 /* Pods_SpaceXTests.framework */; };
 /* End PBXBuildFile section */
@@ -91,6 +92,7 @@
 		7FD5C95E27A5213F00BA4AAE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		7FD5C96027A523F100BA4AAE /* HomeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTest.swift; sourceTree = "<group>"; };
 		7FD5C96227A5240400BA4AAE /* RocketAPIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketAPIMock.swift; sourceTree = "<group>"; };
+		7FD5C96427A532E400BA4AAE /* DetailViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModelTest.swift; sourceTree = "<group>"; };
 		A15EACEEA739F68792B874DC /* Pods-SpaceX-SpaceXUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpaceX-SpaceXUITests.debug.xcconfig"; path = "Target Support Files/Pods-SpaceX-SpaceXUITests/Pods-SpaceX-SpaceXUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A4F93455AB8D5091B6242F15 /* Pods-SpaceX-SpaceXUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpaceX-SpaceXUITests.release.xcconfig"; path = "Target Support Files/Pods-SpaceX-SpaceXUITests/Pods-SpaceX-SpaceXUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A5D598D851341F8014E1B3A2 /* Pods-SpaceX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpaceX.debug.xcconfig"; path = "Target Support Files/Pods-SpaceX/Pods-SpaceX.debug.xcconfig"; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			children = (
 				7FD5C96227A5240400BA4AAE /* RocketAPIMock.swift */,
 				7FD5C96027A523F100BA4AAE /* HomeViewModelTest.swift */,
+				7FD5C96427A532E400BA4AAE /* DetailViewModelTest.swift */,
 			);
 			path = SpaceXTests;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FD5C96527A532E400BA4AAE /* DetailViewModelTest.swift in Sources */,
 				7FD5C96127A523F100BA4AAE /* HomeViewModelTest.swift in Sources */,
 				7FD5C96327A5240400BA4AAE /* RocketAPIMock.swift in Sources */,
 			);

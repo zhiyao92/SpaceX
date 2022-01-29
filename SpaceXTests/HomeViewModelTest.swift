@@ -6,7 +6,6 @@ import RxTest
 
 class HomeViewModelTest: XCTestCase {
     
-    var expectation: XCTestExpectation!
     var scheduler: TestScheduler!
 
     let disposeBag: DisposeBag = DisposeBag()
@@ -26,14 +25,13 @@ class HomeViewModelTest: XCTestCase {
         
         let rocketAPIMock = RocketAPIMock()
         let viewModel = generateViewModel(rocketAPIMock)
-        expectation = XCTestExpectation(description: "getRocket API")
 
         let sectionModelObs = scheduler.createObserver([HomeSectionModel].self)
 
         let rockets: Rockets = [
-            Rocket.initRocketWith(title: "Rocket 1"),
-            Rocket.initRocketWith(title: "Rocket 2"),
-            Rocket.initRocketWith(title: "Rocket 3")
+            Rocket.initRocketWith(title: "Rocket 1", dateUTC: "2020-03-24T22:30:00.000Z"),
+            Rocket.initRocketWith(title: "Rocket 2", dateUTC: "2020-03-24T22:30:00.000Z"),
+            Rocket.initRocketWith(title: "Rocket 3", dateUTC: "2020-03-24T22:30:00.000Z")
         ]
         
         rocketAPIMock.stubReturnRockets(rockets)
@@ -55,7 +53,6 @@ class HomeViewModelTest: XCTestCase {
         
         let rocketAPIMock = RocketAPIMock()
         let viewModel = generateViewModel(rocketAPIMock)
-        expectation = XCTestExpectation(description: "getRocket API error")
         
         let error: NSError = NSError(domain: "", code: 0, userInfo: [:])
         rocketAPIMock.stubReturnRocketsError(error)
@@ -63,5 +60,71 @@ class HomeViewModelTest: XCTestCase {
         
         XCTAssertEqual(rocketAPIMock.fetchRocketAPICalled, 0)
         XCTAssertEqual(rocketAPIMock.fetchRocketAPIErrorCalled, 1)
+    }
+    
+    func testGetRocketAPIUpcoming_ExpectedMatchMock() {
+        
+        let rocketAPIMock = RocketAPIMock()
+        let viewModel = generateViewModel(rocketAPIMock)
+
+        let sectionModelObs = scheduler.createObserver([HomeSectionModel].self)
+
+        let upcomingRocket = Rocket.initRocketWith(title: "Rocket 1", upcoming: true, dateUTC: "2020-03-24T22:30:00.000Z")
+
+        let rockets: Rockets = [
+            upcomingRocket,
+            Rocket.initRocketWith(title: "Rocket 2", dateUTC: "2020-03-24T22:30:00.000Z"),
+            Rocket.initRocketWith(title: "Rocket 3", dateUTC: "2020-03-24T22:30:00.000Z")
+        ]
+        
+        rocketAPIMock.stubReturnRockets(rockets)
+        viewModel.setIsUpcoming(true)
+        viewModel.getRockets()
+
+        viewModel.sectionModels
+            .drive(sectionModelObs)
+            .disposed(by: disposeBag)
+        scheduler.start()
+
+        let expectedSectionModel: [HomeSectionModel] = [.rocketSection(title: "Rockets", items: [.rocketItem(rocket: upcomingRocket)])]
+        
+        XCTAssertEqual(rocketAPIMock.fetchRocketAPICalled, 1)
+        XCTAssertEqual(rocketAPIMock.fetchRocketAPIErrorCalled, 0)
+        XCTAssertEqual(sectionModelObs.events, [.next(0, expectedSectionModel)])
+    }
+    
+    func testGetRocketAPIYears_ExpectedMatchMock() {
+        
+        let rocketAPIMock = RocketAPIMock()
+        let viewModel = generateViewModel(rocketAPIMock)
+
+        let sectionModelObs = scheduler.createObserver([HomeSectionModel].self)
+
+        let twentyTwentyTwo1 = Rocket.initRocketWith(title: "Rocket 1", upcoming: true, dateUTC: "2023-03-24T22:30:00.000Z")
+        let twentyTwentyTwo2 = Rocket.initRocketWith(title: "Rocket 3", upcoming: true, dateUTC: "2023-03-24T22:30:00.000Z")
+
+        let rockets: Rockets = [
+            twentyTwentyTwo1,
+            Rocket.initRocketWith(title: "Rocket 2"),
+            twentyTwentyTwo2
+        ]
+        
+        rocketAPIMock.stubReturnRockets(rockets)
+        viewModel.setSelectedYear(2) // 2022
+        viewModel.getRockets()
+
+        viewModel.sectionModels
+            .drive(sectionModelObs)
+            .disposed(by: disposeBag)
+        scheduler.start()
+
+        let expectedSectionModel: [HomeSectionModel] = [.rocketSection(title: "Rockets", items: [
+            .rocketItem(rocket: twentyTwentyTwo1),
+            .rocketItem(rocket: twentyTwentyTwo2)
+        ])]
+        
+        XCTAssertEqual(rocketAPIMock.fetchRocketAPICalled, 1)
+        XCTAssertEqual(rocketAPIMock.fetchRocketAPIErrorCalled, 0)
+        XCTAssertEqual(sectionModelObs.events, [.next(0, expectedSectionModel)])
     }
 }
